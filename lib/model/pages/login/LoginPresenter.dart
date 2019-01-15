@@ -1,4 +1,5 @@
 import 'package:kuguan_flutter/model/base/BaseVP.dart';
+import 'package:kuguan_flutter/model/bean/LoginInfo.dart';
 import 'package:kuguan_flutter/model/pages/login/LoginContract.dart';
 import 'package:kuguan_flutter/model/net/APIConstant.dart';
 import 'package:kuguan_flutter/model/net/NetUtils.dart';
@@ -12,8 +13,6 @@ class LoginPresenter extends BasePresenter implements I_LoginPresenter {
 
   @override
   void login() {
-    loginView.startNewPage();
-
     var name = loginView.getUserName();
     if (name.length == 0) {
       loginView.ShowMsg('请输入账号');
@@ -43,11 +42,13 @@ class LoginPresenter extends BasePresenter implements I_LoginPresenter {
 
   @override
   Future onSucess(data) async {
+    LoginInfo loginInfo = LoginInfo.fromJson(data);
     loginView.ShowMsg('登陆成功');
     //将输入的账号密码保存到sp中
     SharedPreferences prefer = await SharedPreferences.getInstance();
-    prefer.setString('userName', loginView.getUserName());
-    prefer.setString('passWord', loginView.getPwd());
+    prefer.setString(StaticKey.KEY_USER_NAME, loginView.getUserName());
+    prefer.setString(StaticKey.KEY_PASS_WORD, loginView.getPwd());
+    prefer.setString(StaticKey.KEY_ACCESS_TOKEN, loginInfo.access_token);
     //跳转选择停车场页面
     loginView.startNewPage();
     LogUtils.showLog(LoginPresenter, '返回的结果是' + data.toString());

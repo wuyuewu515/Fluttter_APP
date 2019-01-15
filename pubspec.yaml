@@ -54,6 +54,7 @@ flutter:
    - images/withe_left_arrow.png
    - images/icon_delete.png
    - images/sousuo.png
+   - images/icon_arrow_right.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

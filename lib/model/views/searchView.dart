@@ -37,7 +37,7 @@ class _InputText extends State<SearchView> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: new Border.all(width: 1.0, color: const Color(0xFFB3B3B3)),
+        border: new Border.all(width: 1.0, color: const Color(0xFFE6E6E6)),
         color: Colors.white,
         borderRadius: new BorderRadius.all(new Radius.circular(8.0)),
       ),

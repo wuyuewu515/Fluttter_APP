@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:kuguan_flutter/model/bean/ResultInfo.dart';
+import 'package:kuguan_flutter/model/net/APIConstant.dart';
 import 'package:kuguan_flutter/model/net/RequestListener.dart';
 import 'package:kuguan_flutter/model/utils/LogUtils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 ///网络工具类
 class NetUtils {
@@ -30,6 +32,8 @@ class NetUtils {
   void _getRequestMethod(String url, Map<String, String> params, String method,
       RequestListener listener) async {
     var isPost = (method == 'post');
+    SharedPreferences prefer = await SharedPreferences.getInstance();
+    authorization = prefer.getString(StaticKey.KEY_ACCESS_TOKEN);
 
     Dio dio = Dio(Options(
         method: method,

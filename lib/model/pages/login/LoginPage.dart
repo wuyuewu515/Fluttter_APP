@@ -28,6 +28,8 @@ class _LoginPageState extends State<LoginPage> implements I_loginView {
   void initState() {
     super.initState();
     _loginPresenter = LoginPresenter(this);
+    userController.text = '135deng';
+    pwdController.text = '123456';
   }
 
   @override
@@ -184,9 +186,12 @@ class _LoginPageState extends State<LoginPage> implements I_loginView {
 
   @override
   startNewPage() {
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => SelectParkPage()),
-        (route) => route == null);
+    var duration = Duration(milliseconds: 1200);
+    Future.delayed(duration, () {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => SelectParkPage()),
+          (route) => route == null);
+    });
   }
 }
