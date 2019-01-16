@@ -6,10 +6,10 @@ abstract class I_LoginPresenter {
 }
 
 abstract class I_loginView extends BaseView {
-
   String getPwd();
 
   String getUserName();
+
   ///跳转新的页面
   startNewPage();
 }

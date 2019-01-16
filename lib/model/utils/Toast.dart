@@ -7,14 +7,15 @@ import 'package:flutter/material.dart';
 /// @email shuqing.li@merculet.io
 ///
 class Toast {
-  static OverlayEntry _overlayEntry; //toast靠它加到屏幕上
-  static bool _showing = false; //toast是否正在showing
-  static DateTime _startedTime; //开启一个新toast的当前时间，用于对比是否已经展示了足够时间
-  static String _msg;
-  static void toast(
-      BuildContext context,
-      String msg,
-      ) async {
+  OverlayEntry _overlayEntry; //toast靠它加到屏幕上
+  bool _showing = false; //toast是否正在showing
+  DateTime _startedTime; //开启一个新toast的当前时间，用于对比是否已经展示了足够时间
+  String _msg;
+
+  void toast(
+    BuildContext context,
+    String msg,
+  ) async {
     assert(msg != null);
     _msg = msg;
     _startedTime = DateTime.now();
@@ -24,22 +25,22 @@ class Toast {
     if (_overlayEntry == null) {
       _overlayEntry = OverlayEntry(
           builder: (BuildContext context) => Positioned(
-            //top值，可以改变这个值来改变toast在屏幕中的位置
-            top: MediaQuery.of(context).size.height * 5 / 6,
-            child: Container(
-                alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 80.0),
-                  child: AnimatedOpacity(
-                    opacity: _showing ? 1.0 : 0.0, //目标透明度
-                    duration: _showing
-                        ? Duration(milliseconds: 100)
-                        : Duration(milliseconds: 400),
-                    child: _buildToastWidget(),
-                  ),
-                )),
-          ));
+                //top值，可以改变这个值来改变toast在屏幕中的位置
+                top: MediaQuery.of(context).size.height * 5 / 6,
+                child: Container(
+                    alignment: Alignment.center,
+                    width: MediaQuery.of(context).size.width,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 80.0),
+                      child: AnimatedOpacity(
+                        opacity: _showing ? 1.0 : 0.0, //目标透明度
+                        duration: _showing
+                            ? Duration(milliseconds: 100)
+                            : Duration(milliseconds: 400),
+                        child: _buildToastWidget(),
+                      ),
+                    )),
+              ));
       overlayState.insert(_overlayEntry);
     } else {
       //重新绘制UI，类似setState
@@ -55,7 +56,7 @@ class Toast {
   }
 
   //toast绘制
-  static _buildToastWidget() {
+  _buildToastWidget() {
     return Center(
       child: Card(
         color: Colors.grey[700],

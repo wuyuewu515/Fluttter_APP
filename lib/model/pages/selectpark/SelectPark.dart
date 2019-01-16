@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kuguan_flutter/model/base/BasePage.dart';
 import 'package:kuguan_flutter/model/bean/ParkInfo.dart';
 import 'package:kuguan_flutter/model/pages/selectpark/SelectParkListContract.dart';
 import 'package:kuguan_flutter/model/pages/selectpark/SelectParkPresenter.dart';
-import 'package:kuguan_flutter/model/utils/LogUtils.dart';
-import 'package:kuguan_flutter/model/utils/Toast.dart';
 import 'package:kuguan_flutter/model/views/searchView.dart';
 
 ///停车场选择页面
-class SelectParkPage extends StatefulWidget {
+class SelectParkPage extends BasePage {
   @override
-  State<StatefulWidget> createState() {
+  _SelectParkPageState createState() {
     return _SelectParkPageState();
   }
 }
 
-class _SelectParkPageState extends State<SelectParkPage>
-    implements I_SelectParkView {
+class _SelectParkPageState extends BaseState implements I_SelectParkView {
   var listItems = List<ParkInfo>();
   var _hasData = false;
   SelectParkPresenter _presenter;
@@ -77,17 +75,20 @@ class _SelectParkPageState extends State<SelectParkPage>
   }
 
   Widget _itemBuild(int index) {
-    return GestureDetector(
-      child: Column(
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.only(left: ScreenUtil().setHeight(20)),
-                  height: ScreenUtil().setHeight(88),
-                  alignment: Alignment.centerLeft,
-                  child: Text(
+    return Column(
+      children: <Widget>[
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                margin: EdgeInsets.only(left: ScreenUtil().setHeight(20)),
+                height: ScreenUtil().setHeight(88),
+                alignment: Alignment.centerLeft,
+                child: ListTile(
+                  onTap: () {
+                    _onClick(listItems[index].parkName);
+                  },
+                  title: Text(
                     listItems[index].parkName,
                     style: TextStyle(
                       fontSize: 14,
@@ -95,29 +96,21 @@ class _SelectParkPageState extends State<SelectParkPage>
                     ),
                   ),
                 ),
-                flex: 1,
               ),
-              Container(
-                margin: EdgeInsets.only(right: ScreenUtil().setWidth(25)),
-                child: Image.asset('images/icon_arrow_right.png'),
-              ),
-            ],
-          ),
-          Container(
-            height: 1,
-            color: const Color(0xFFE6E6E6),
-          ) //下划线
-        ],
-      ),
-      onTap: () {
-        _onClick(listItems[index].parkName);
-      },
+              flex: 1,
+            ),
+            Container(
+              margin: EdgeInsets.only(right: ScreenUtil().setWidth(25)),
+              child: Image.asset('images/icon_arrow_right.png'),
+            ),
+          ],
+        ),
+        Container(
+          height: 1,
+          color: const Color(0xFFE6E6E6),
+        ) //下划线
+      ],
     );
-  }
-
-  @override
-  void ShowMsg(String msg) {
-    Toast.toast(context, msg);
   }
 
   @override
@@ -136,8 +129,6 @@ class _SelectParkPageState extends State<SelectParkPage>
   _onClick(String parkName) {
     //跳转停车场页面
     ShowMsg(parkName);
-    LogUtils.showLog(SelectParkPage, '选择的停车场是${parkName}');
-
-    setState(() {});
+    //  LogUtils.showLog(SelectParkPage, '选择的停车场是${parkName}');
   }
 }

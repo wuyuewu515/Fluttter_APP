@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kuguan_flutter/model/base/BasePage.dart';
 import 'package:kuguan_flutter/model/pages/login/LoginContract.dart';
 import 'package:kuguan_flutter/model/pages/login/LoginPresenter.dart';
 import 'package:kuguan_flutter/model/pages/selectpark/SelectPark.dart';
-import 'package:kuguan_flutter/model/utils/Toast.dart';
 import 'package:kuguan_flutter/model/views/TextFieldWithDelete.dart';
 
 ///登陆页面
-class LoginPage extends StatefulWidget {
+class LoginPage extends BasePage {
   @override
-  State<StatefulWidget> createState() {
+  _LoginPageState createState() {
     return _LoginPageState();
   }
 }
 
-class _LoginPageState extends State<LoginPage> implements I_loginView {
+class _LoginPageState extends BaseState implements I_loginView {
   static const LOGO = "images/icon_login_logo.png";
 
   var userInput;
@@ -28,12 +28,13 @@ class _LoginPageState extends State<LoginPage> implements I_loginView {
   void initState() {
     super.initState();
     _loginPresenter = LoginPresenter(this);
-    userController.text = '135deng';
-    pwdController.text = '123456';
   }
 
   @override
   Widget build(BuildContext context) {
+    userController.text = '135deng';
+    pwdController.text = '123456';
+
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
     userInput = TextFieldWithDelete(
       hintText: '请输入账号',
@@ -180,13 +181,9 @@ class _LoginPageState extends State<LoginPage> implements I_loginView {
   }
 
   @override
-  void ShowMsg(msg) {
-    Toast.toast(context, msg);
-  }
-
-  @override
   startNewPage() {
     var duration = Duration(milliseconds: 1200);
+
     Future.delayed(duration, () {
       Navigator.pushAndRemoveUntil(
           context,
