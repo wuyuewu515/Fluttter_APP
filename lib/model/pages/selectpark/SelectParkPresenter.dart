@@ -13,6 +13,7 @@ class SelectParkPresenter extends BasePresenter
   @override
   void getParkData() {
     var keyWord = selectView.getkeyWord();
+    keyWord = keyWord == null ? "" : keyWord;
     Map<String, String> params = {"searchName": keyWord};
     NetUtils.getInstance().getRequest(APIConstant.PARK_SEARCH, params, this);
   }

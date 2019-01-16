@@ -47,7 +47,7 @@ class _SelectParkPageState extends BaseState implements I_SelectParkView {
               flex: 1,
               child: Container(
                 color: Colors.white,
-                child: _hasData ? _listBuild() : _searchView(),
+                child: _hasData ? _listBuild() : getEmptyView(),
               ),
             )
           ],
@@ -70,6 +70,9 @@ class _SelectParkPageState extends BaseState implements I_SelectParkView {
       child: SearchView(
         hintText: '请输入停车场的名称',
         textController: parkController,
+        fieldCallBack: (text) {
+          _presenter.getParkData();
+        },
       ),
     );
   }
@@ -77,33 +80,20 @@ class _SelectParkPageState extends BaseState implements I_SelectParkView {
   Widget _itemBuild(int index) {
     return Column(
       children: <Widget>[
-        Row(
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                margin: EdgeInsets.only(left: ScreenUtil().setHeight(20)),
-                height: ScreenUtil().setHeight(88),
-                alignment: Alignment.centerLeft,
-                child: ListTile(
-                  onTap: () {
-                    _onClick(listItems[index].parkName);
-                  },
-                  title: Text(
-                    listItems[index].parkName,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: const Color(0xFF333333),
-                    ),
-                  ),
-                ),
+        SizedBox(
+          child: ListTile(
+            onTap: () {
+              _onClick(listItems[index].parkName);
+            },
+            title: Text(
+              listItems[index].parkName,
+              style: TextStyle(
+                fontSize: 14,
+                color: const Color(0xFF333333),
               ),
-              flex: 1,
             ),
-            Container(
-              margin: EdgeInsets.only(right: ScreenUtil().setWidth(25)),
-              child: Image.asset('images/icon_arrow_right.png'),
-            ),
-          ],
+            trailing: Image.asset('images/icon_arrow_right.png'),
+          ),
         ),
         Container(
           height: 1,

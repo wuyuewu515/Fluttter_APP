@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+typedef void ITextFieldCallBack(String content);
+
 ///带有删除按钮的输入框
 class SearchView extends StatefulWidget {
   ///提示语
@@ -12,10 +14,14 @@ class SearchView extends StatefulWidget {
   ///输入类型
   final TextInputType inputType;
 
+  ///回调
+  final ITextFieldCallBack fieldCallBack;
+
   const SearchView({
     Key key,
     @required this.hintText,
     @required this.textController,
+    this.fieldCallBack,
     this.inputType,
   }) : super(key: key);
 
@@ -78,5 +84,9 @@ class _InputText extends State<SearchView> {
           affinity: TextAffinity.downstream,
           offset: widget.textController.text.length));
     });
+
+    if (null != widget.fieldCallBack) {
+      widget.fieldCallBack(text);
+    }
   }
 }
