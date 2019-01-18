@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kuguan_flutter/model/base/BasePage.dart';
 import 'package:kuguan_flutter/model/bean/ParkInfo.dart';
+import 'package:kuguan_flutter/model/pages/mainpage/Main.dart';
 import 'package:kuguan_flutter/model/pages/selectpark/SelectParkListContract.dart';
 import 'package:kuguan_flutter/model/pages/selectpark/SelectParkPresenter.dart';
 import 'package:kuguan_flutter/model/views/searchView.dart';
@@ -118,7 +119,9 @@ class _SelectParkPageState extends BaseState implements I_SelectParkView {
 
   _onClick(String parkName) {
     //跳转停车场页面
-    ShowMsg(parkName);
-    //  LogUtils.showLog(SelectParkPage, '选择的停车场是${parkName}');
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => MainPage(parkName)),
+        (route) => route == null);
   }
 }

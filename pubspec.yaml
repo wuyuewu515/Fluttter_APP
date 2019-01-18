@@ -56,6 +56,12 @@ flutter:
    - images/sousuo.png
    - images/icon_arrow_right.png
    - images/icon_empty.png
+   - images/mycar_normal.png
+   - images/mycar_check.png
+   - images/personal_normal.png
+   - images/personal_check.png
+   - images/home_normal.png
+   - images/home_check.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
