@@ -62,24 +62,25 @@ class _MainPageState extends BaseState with SingleTickerProviderStateMixin {
             indicatorWeight: 1,
             controller: _tabController,
             indicatorColor: Colors.transparent,
-            unselectedLabelColor: Color(0xFF333333),
-            labelColor: Color(0xFF2D8BFF),
             tabs: [
               bottomTab(
                   position == 0
                       ? 'images/home_check.png'
                       : 'images/home_normal.png',
-                  '首页'),
+                  '首页',
+                  position == 0 ? Color(0xFF2D8BFF) : Color(0xFF333333)),
               bottomTab(
                   position == 1
                       ? 'images/mycar_check.png'
                       : 'images/mycar_normal.png',
-                  '我的车辆'),
+                  '我的车辆',
+                  position == 1 ? Color(0xFF2D8BFF) : Color(0xFF333333)),
               bottomTab(
                   position == 2
                       ? 'images/personal_check.png'
                       : 'images/personal_normal.png',
-                  '我的'),
+                  '我的',
+                  position == 2 ? Color(0xFF2D8BFF) : Color(0xFF333333)),
             ],
           ),
         ),
@@ -88,7 +89,7 @@ class _MainPageState extends BaseState with SingleTickerProviderStateMixin {
   }
 
   ///底部的选项卡
-  Widget bottomTab(iconUrl, String text) {
+  Widget bottomTab(iconUrl, String text, Color color) {
     return Container(
       margin: EdgeInsets.only(top: ScreenUtil().setHeight(10)),
       height: ScreenUtil().setHeight(100),
@@ -102,7 +103,7 @@ class _MainPageState extends BaseState with SingleTickerProviderStateMixin {
           ),
           Text(
             text,
-            style: TextStyle(fontSize: 15),
+            style: TextStyle(fontSize: 15, color: color),
           )
         ],
       ),
