@@ -40,8 +40,6 @@ class SplashPage extends StatelessWidget {
       },
     );
 
-    //   Navigator.push(_context, newPage);
-
     Navigator.pushAndRemoveUntil(
         _context, newPage, (Route<dynamic> rout) => false);
   }

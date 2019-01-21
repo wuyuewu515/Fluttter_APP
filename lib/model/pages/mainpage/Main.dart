@@ -42,46 +42,49 @@ class _MainPageState extends BaseState with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            title,
-            style: TextStyle(fontSize: 18),
+    return WillPopScope(
+      onWillPop: doubleClickBack,
+      child: MaterialApp(
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              title,
+              style: TextStyle(fontSize: 18),
+            ),
+            centerTitle: true,
           ),
-          centerTitle: true,
-        ),
-        body: TabBarView(
-          children: [HomePage(), MyCarPage(), MinePage()],
-          controller: _tabController,
-        ),
-        bottomNavigationBar: Container(
-          height: ScreenUtil().setHeight(100),
-          color: Colors.white,
-          child: TabBar(
-            indicatorWeight: 1,
+          body: TabBarView(
+            children: [HomePage(), MyCarPage(), MinePage()],
             controller: _tabController,
-            indicatorColor: Colors.transparent,
-            tabs: [
-              bottomTab(
-                  position == 0
-                      ? 'images/home_check.png'
-                      : 'images/home_normal.png',
-                  '首页',
-                  position == 0 ? Color(0xFF2D8BFF) : Color(0xFF333333)),
-              bottomTab(
-                  position == 1
-                      ? 'images/mycar_check.png'
-                      : 'images/mycar_normal.png',
-                  '我的车辆',
-                  position == 1 ? Color(0xFF2D8BFF) : Color(0xFF333333)),
-              bottomTab(
-                  position == 2
-                      ? 'images/personal_check.png'
-                      : 'images/personal_normal.png',
-                  '我的',
-                  position == 2 ? Color(0xFF2D8BFF) : Color(0xFF333333)),
-            ],
+          ),
+          bottomNavigationBar: Container(
+            height: ScreenUtil().setHeight(100),
+            color: Colors.white,
+            child: TabBar(
+              indicatorWeight: 1,
+              controller: _tabController,
+              indicatorColor: Colors.transparent,
+              tabs: [
+                bottomTab(
+                    position == 0
+                        ? 'images/home_check.png'
+                        : 'images/home_normal.png',
+                    '首页',
+                    position == 0 ? Color(0xFF2D8BFF) : Color(0xFF333333)),
+                bottomTab(
+                    position == 1
+                        ? 'images/mycar_check.png'
+                        : 'images/mycar_normal.png',
+                    '我的车辆',
+                    position == 1 ? Color(0xFF2D8BFF) : Color(0xFF333333)),
+                bottomTab(
+                    position == 2
+                        ? 'images/personal_check.png'
+                        : 'images/personal_normal.png',
+                    '我的',
+                    position == 2 ? Color(0xFF2D8BFF) : Color(0xFF333333)),
+              ],
+            ),
           ),
         ),
       ),
@@ -115,5 +118,19 @@ class _MainPageState extends BaseState with SingleTickerProviderStateMixin {
     position = _tabController.index;
     LogUtils.showLog(MainPage, '当前选中的位置是${_tabController.index}');
     setState(() {});
+  }
+
+  int last = 0;
+
+  Future<bool> doubleClickBack() {
+    ShowMsg('再点一次退出程序');
+    LogUtils.showLog(MainPage, '再点一次退出程序');
+    int now =DateTime.now().millisecondsSinceEpoch;
+    if (now - last > 1500) {
+      last = DateTime.now().millisecondsSinceEpoch;
+      return Future.value(false);
+    } else {
+      return Future.value(true);
+    }
   }
 }

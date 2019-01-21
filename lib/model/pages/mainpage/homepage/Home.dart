@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kuguan_flutter/model/base/BasePage.dart';
+import 'package:kuguan_flutter/model/views/HomeButton.dart';
 
 ///首页
 class HomePage extends BasePage {
@@ -11,9 +12,50 @@ class HomePage extends BasePage {
 }
 
 class _HomePageState extends BaseState {
+  var rukuButton;
+  var chukuButton;
+  var qingdianButton;
+  var tihuanButton;
+
+  @override
+  void initState() {
+    super.initState();
+    rukuButton = HomeButton(
+      title: '入库',
+      subTitle: 'Store',
+      iconUrl: 'images/ruku.png',
+    );
+
+    chukuButton = HomeButton(
+      title: '出库',
+      subTitle: 'Deliver',
+      iconUrl: 'images/chuku.png',
+    );
+    qingdianButton = HomeButton(
+      title: '清点',
+      subTitle: 'Check',
+      iconUrl: 'images/qingdian.png',
+    );
+    tihuanButton = HomeButton(
+      title: '替换',
+      subTitle: 'Replace',
+      iconUrl: 'images/tihuan.png',
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return buildBody(context);
+    return Container(
+      color: const Color(0xFFE6E6E6),
+      child: ListView(
+        children: <Widget>[
+          rukuButton,
+          chukuButton,
+          qingdianButton,
+          tihuanButton
+        ],
+      ),
+    );
   }
 
   @override
@@ -32,7 +74,6 @@ class _HomePageState extends BaseState {
           height: ScreenUtil().setWidth(250),
           width: ScreenUtil().setHeight(710),
           child: Row(
-
             children: <Widget>[
               Expanded(
                 flex: 5,
@@ -57,7 +98,6 @@ class _HomePageState extends BaseState {
                       style: TextStyle(
                           fontSize: 9, color: const Color(0xFF333333)),
                     ),
-
                   ],
                 ),
               ),
@@ -66,48 +106,5 @@ class _HomePageState extends BaseState {
         ),
       ),
     );
-  }
-
-  Widget _buildCard() {
-    return Align(
-        alignment: Alignment.topCenter,
-        child: Padding(
-          child: SizedBox(
-            height: ScreenUtil().setHeight(950),
-            width: ScreenUtil().setWidth(690),
-            child: Card(
-              color: Colors.white,
-              elevation: 3.0,
-              margin: EdgeInsets.all(ScreenUtil().setWidth(30)),
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                      padding: EdgeInsets.fromLTRB(
-                          ScreenUtil().setWidth(95),
-                          ScreenUtil().setHeight(180),
-                          ScreenUtil().setWidth(95),
-                          0)),
-                  Padding(
-                      padding: EdgeInsets.fromLTRB(
-                          ScreenUtil().setWidth(95),
-                          ScreenUtil().setHeight(40),
-                          ScreenUtil().setWidth(95),
-                          0)),
-                  Container(
-                    margin: EdgeInsets.only(top: ScreenUtil().setHeight(80)),
-                    width: ScreenUtil().setWidth(145),
-                    height: ScreenUtil().setHeight(130),
-                    child: Image.asset(
-                      'images/logo.png',
-                      alignment: Alignment.bottomCenter,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          padding: EdgeInsets.fromLTRB(ScreenUtil().setWidth(30),
-              ScreenUtil().setWidth(335), ScreenUtil().setWidth(30), 0),
-        ));
   }
 }

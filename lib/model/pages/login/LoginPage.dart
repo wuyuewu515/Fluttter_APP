@@ -5,6 +5,7 @@ import 'package:kuguan_flutter/model/base/BasePage.dart';
 import 'package:kuguan_flutter/model/pages/login/LoginContract.dart';
 import 'package:kuguan_flutter/model/pages/login/LoginPresenter.dart';
 import 'package:kuguan_flutter/model/pages/selectpark/SelectPark.dart';
+import 'package:kuguan_flutter/model/utils/NavigatorUtils.dart';
 import 'package:kuguan_flutter/model/views/TextFieldWithDelete.dart';
 
 ///登陆页面
@@ -182,13 +183,11 @@ class _LoginPageState extends BaseState implements I_loginView {
 
   @override
   startNewPage() {
-    var duration = Duration(milliseconds: 1200);
+    var duration = Duration(milliseconds: 800);
 
     Future.delayed(duration, () {
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => SelectParkPage()),
-          (route) => route == null);
+      NavigatorUtils.goToNewPageFinishNow(context, SelectParkPage());
+
     });
   }
 }
