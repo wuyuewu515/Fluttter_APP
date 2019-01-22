@@ -46,12 +46,14 @@ class NetUtils {
     //设置拦截器---请求发起之前
     dio.interceptor.request.onSend = (Options options) {
       LogUtils.showLog(NetUtils, '开始要进行网络请求了...');
+      listener.onSend('加载中..,');
       return options; //continue
     };
     //设置拦截器---请求成功,返回响应数据之前
     dio.interceptor.response.onSuccess = (Response response) {
       // 在返回响应数据之前做一些预处理
       LogUtils.showLog(NetUtils, '网络请求成功，即将返回数据...');
+      listener.onResponse();
       return response; // continue
     };
     //设置拦截器---请求失败

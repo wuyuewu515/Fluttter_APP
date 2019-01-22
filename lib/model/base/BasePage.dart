@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kuguan_flutter/model/base/BaseVP.dart';
 import 'package:kuguan_flutter/model/bean/AccountInfo.dart';
+import 'package:kuguan_flutter/model/utils/LoadingDialog.dart';
 import 'package:kuguan_flutter/model/utils/Toast.dart';
 
 ///基类
@@ -14,12 +15,14 @@ abstract class BasePage extends StatefulWidget {
 class BaseState extends State<BasePage> implements BaseView {
   Toast _toast;
   AccountInfo accountInfo;
+  LoadingDialog _loadingDialog;
 
   @override
   void initState() {
     super.initState();
     _toast = Toast();
     accountInfo = AccountInfo.getInstance();
+    _loadingDialog = LoadingDialog();
   }
 
   @override
@@ -33,6 +36,16 @@ class BaseState extends State<BasePage> implements BaseView {
   @override
   void ShowMsg(String msg) {
     _toast.toast(context, msg);
+  }
+
+  @override
+  void dimissLoading() {
+    _loadingDialog.dimiss();
+  }
+
+  @override
+  void showLoading(msg) {
+    _loadingDialog.show(context, msg);
   }
 
   Widget getEmptyView() {
