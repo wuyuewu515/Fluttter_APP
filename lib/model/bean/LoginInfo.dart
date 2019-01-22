@@ -19,4 +19,11 @@ class LoginInfo {
       _$LoginInfoFromJson(json);
 
   Map<String, dynamic> toJson() => _$LoginInfoToJson(this);
+
+  @override
+  String toString() {
+    return 'LoginInfo{access_token: $access_token, refresh_token: $refresh_token, expires_in: $expires_in}';
+  }
+
+
 }

@@ -21,6 +21,7 @@ class MainPage extends BasePage {
 class _MainPageState extends BaseState with SingleTickerProviderStateMixin {
   TabController _tabController;
   final title;
+  var barTitle;
 
   ///当前的位置
   int position = 0;
@@ -30,6 +31,7 @@ class _MainPageState extends BaseState with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    barTitle = title;
     _tabController = TabController(length: 3, vsync: this);
     _tabController.addListener(onChange);
   }
@@ -42,13 +44,14 @@ class _MainPageState extends BaseState with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+
     return WillPopScope(
       onWillPop: doubleClickBack,
       child: MaterialApp(
         home: Scaffold(
           appBar: AppBar(
             title: Text(
-              title,
+              barTitle,
               style: TextStyle(fontSize: 18),
             ),
             centerTitle: true,
@@ -116,7 +119,19 @@ class _MainPageState extends BaseState with SingleTickerProviderStateMixin {
   void onChange() {
     if (position == _tabController.index) return;
     position = _tabController.index;
+    switch (position) {
+      case 0:
+        barTitle = title;
+        break;
+      case 1:
+        barTitle = '我的车辆';
+        break;
+      case 2:
+        barTitle = '我的';
+        break;
+    }
     LogUtils.showLog(MainPage, '当前选中的位置是${_tabController.index}');
+    LogUtils.showLog(MainPage, '当前选中的标题是${barTitle}');
     setState(() {});
   }
 
@@ -125,7 +140,7 @@ class _MainPageState extends BaseState with SingleTickerProviderStateMixin {
   Future<bool> doubleClickBack() {
     ShowMsg('再点一次退出程序');
     LogUtils.showLog(MainPage, '再点一次退出程序');
-    int now =DateTime.now().millisecondsSinceEpoch;
+    int now = DateTime.now().millisecondsSinceEpoch;
     if (now - last > 1500) {
       last = DateTime.now().millisecondsSinceEpoch;
       return Future.value(false);

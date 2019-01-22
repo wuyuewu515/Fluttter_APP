@@ -85,7 +85,7 @@ class _SelectParkPageState extends BaseState implements I_SelectParkView {
         SizedBox(
           child: ListTile(
             onTap: () {
-              _onClick(listItems[index].parkName);
+              _onClick(listItems[index]);
             },
             title: Text(
               listItems[index].parkName,
@@ -118,8 +118,14 @@ class _SelectParkPageState extends BaseState implements I_SelectParkView {
     });
   }
 
-  _onClick(String parkName) {
-    NavigatorUtils.goToNewPageFinishNow(context, MainPage(parkName));
+  _onClick(ParkInfo parkInfo) {
+    _presenter.onClick(parkInfo);
+    NavigatorUtils.goToNewPageFinishNow(context, MainPage(parkInfo.parkName));
+  }
 
+  @override
+  void dispose() {
+    super.dispose();
+    parkController.dispose();
   }
 }

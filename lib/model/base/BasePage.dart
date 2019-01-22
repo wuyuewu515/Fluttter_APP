@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kuguan_flutter/model/base/BaseVP.dart';
+import 'package:kuguan_flutter/model/bean/AccountInfo.dart';
 import 'package:kuguan_flutter/model/utils/Toast.dart';
 
 ///基类
@@ -12,11 +13,13 @@ abstract class BasePage extends StatefulWidget {
 
 class BaseState extends State<BasePage> implements BaseView {
   Toast _toast;
+  AccountInfo accountInfo;
 
   @override
   void initState() {
     super.initState();
     _toast = Toast();
+    accountInfo = AccountInfo.getInstance();
   }
 
   @override

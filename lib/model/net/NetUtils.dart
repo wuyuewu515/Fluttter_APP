@@ -19,18 +19,18 @@ class NetUtils {
     return _netUtils;
   }
 
-  void getRequest(
-      String url, Map<String, String> params, RequestListener listener) {
-    _getRequestMethod(url, params, 'get', listener);
+  void getRequest(String url, Map<String, String> params,
+      RequestListener listener, int requestCode) {
+    _getRequestMethod(url, params, 'get', listener, requestCode);
   }
 
-  void postRequest(
-      String url, Map<String, String> params, RequestListener listener) {
-    _getRequestMethod(url, params, 'post', listener);
+  void postRequest(String url, Map<String, String> params,
+      RequestListener listener, int requestCode) {
+    _getRequestMethod(url, params, 'post', listener, requestCode);
   }
 
   void _getRequestMethod(String url, Map<String, String> params, String method,
-      RequestListener listener) async {
+      RequestListener listener, int requestCode) async {
     var isPost = (method == 'post');
     SharedPreferences prefer = await SharedPreferences.getInstance();
     authorization = prefer.getString(StaticKey.KEY_ACCESS_TOKEN);
@@ -78,7 +78,7 @@ class NetUtils {
         url += paramStr;
         response = await dio.get(url);
       }
-      return hanldRespose(response, listener);
+      return hanldRespose(response, listener, requestCode);
     } catch (e) {
       return print(e);
     }
@@ -95,7 +95,8 @@ class NetUtils {
   }
 
   ///处理返回的数据结果
-  void hanldRespose(Response response, RequestListener listener) {
+  void hanldRespose(
+      Response response, RequestListener listener, int requestCode) {
     var resultInfo = ResultInfo.fromJson(response.data);
     int code = int.parse(resultInfo.code);
     if (!bool.fromEnvironment("dart.vm.product")) {
@@ -108,7 +109,7 @@ class NetUtils {
     }
     if (code >= 0 && code <= 99) {
       //数据正常，接口访问成功
-      listener.onSucess(resultInfo.data);
+      listener.onSucess(requestCode, resultInfo.data);
     } else {
       listener.onFail(resultInfo.friendlyMsg);
 

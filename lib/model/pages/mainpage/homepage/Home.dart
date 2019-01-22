@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kuguan_flutter/model/base/BasePage.dart';
 import 'package:kuguan_flutter/model/views/HomeButton.dart';
 
@@ -9,6 +8,13 @@ class HomePage extends BasePage {
   BaseState createState() {
     return _HomePageState();
   }
+}
+
+enum EnterType {
+  chuku, //出库
+  ruku, //入库
+  qingdian, //清点
+  tihuan, //替换
 }
 
 class _HomePageState extends BaseState {
@@ -24,22 +30,34 @@ class _HomePageState extends BaseState {
       title: '入库',
       subTitle: 'Store',
       iconUrl: 'images/ruku.png',
+      buttonClick: () {
+        _enter(EnterType.ruku);
+      },
     );
 
     chukuButton = HomeButton(
       title: '出库',
       subTitle: 'Deliver',
       iconUrl: 'images/chuku.png',
+      buttonClick: () {
+        _enter(EnterType.chuku);
+      },
     );
     qingdianButton = HomeButton(
       title: '清点',
       subTitle: 'Check',
       iconUrl: 'images/qingdian.png',
+      buttonClick: () {
+        _enter(EnterType.qingdian);
+      },
     );
     tihuanButton = HomeButton(
       title: '替换',
       subTitle: 'Replace',
       iconUrl: 'images/tihuan.png',
+      buttonClick: () {
+        _enter(EnterType.tihuan);
+      },
     );
   }
 
@@ -58,53 +76,23 @@ class _HomePageState extends BaseState {
     );
   }
 
-  @override
-  Widget buildBody(BuildContext context) {
-    return Container(
-      color: const Color(0xFFE6E6E6),
-      alignment: Alignment.topCenter,
-      child: Card(
-        child: Container(
-          constraints: BoxConstraints(
-            maxHeight: ScreenUtil().setHeight(250),
-            maxWidth: ScreenUtil().setWidth(710),
-          ),
-          alignment: Alignment.topCenter,
-          margin: EdgeInsets.only(top: ScreenUtil().setHeight(10)),
-          height: ScreenUtil().setWidth(250),
-          width: ScreenUtil().setHeight(710),
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                flex: 5,
-                child: Image.asset(
-                  'images/chuku.png',
-                  height: ScreenUtil().setHeight(150),
-                  width: ScreenUtil().setWidth(240),
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      '入库',
-                      style: TextStyle(
-                          fontSize: 17, color: const Color(0xFF333333)),
-                    ),
-                    Text(
-                      'Store',
-                      style: TextStyle(
-                          fontSize: 9, color: const Color(0xFF333333)),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+  ///跳转相关页面
+  _enter(EnterType enterType) {
+    String result = '';
+    switch (enterType) {
+      case EnterType.ruku:
+        result = '入库';
+        break;
+      case EnterType.chuku:
+        result = '出库';
+        break;
+      case EnterType.qingdian:
+        result = '清点';
+        break;
+      case EnterType.tihuan:
+        result = '替换';
+        break;
+    }
+    ShowMsg(result);
   }
 }

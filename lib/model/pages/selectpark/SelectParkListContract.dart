@@ -5,6 +5,8 @@ import 'package:kuguan_flutter/model/bean/ParkInfo.dart';
 abstract class I_SelectParkPresenter {
   ///获取停车场列表数据
   void getParkData();
+
+  void onClick(parkInfo);
 }
 
 abstract class I_SelectParkView extends BaseView {

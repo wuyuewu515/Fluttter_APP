@@ -36,7 +36,7 @@ class _HomeButtonState extends State<HomeButton> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: widget.buttonClick,
+      onTap: widget.buttonClick ==null?null:widget.buttonClick,
       child: Container(
         alignment: Alignment.topCenter,
         child: Card(

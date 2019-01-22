@@ -1,3 +1,4 @@
+import 'package:kuguan_flutter/model/bean/AccountInfo.dart';
 import 'package:kuguan_flutter/model/net/RequestListener.dart';
 
 class BasePresenter implements RequestListener {
@@ -5,13 +6,15 @@ class BasePresenter implements RequestListener {
 
   BasePresenter(this.mView);
 
+  AccountInfo accountInfo = AccountInfo.getInstance();
+
   @override
   void onFail(String errorMsg) {
     mView.ShowMsg(errorMsg);
   }
 
   @override
-  void onSucess(data) {}
+  void onSucess(code, data) {}
 }
 
 ///所有的页面都需要实现的方法

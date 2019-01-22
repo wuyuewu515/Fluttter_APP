@@ -37,4 +37,10 @@ class ParkInfo {
     });
     return result;
   }
+
+  @override
+  String toString() {
+    return 'ParkInfo{id: $id, parkName: $parkName, longitude: $longitude, latitude: $latitude, supervisingPlan: $supervisingPlan, parkRadius: $parkRadius, parkRFID: $parkRFID}';
+  }
+
 }
