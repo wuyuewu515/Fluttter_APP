@@ -1,4 +1,5 @@
 import 'package:kuguan_flutter/model/base/BaseVP.dart';
+import 'package:kuguan_flutter/model/bean/MyCarInfo.dart';
 import 'package:kuguan_flutter/model/net/APIConstant.dart';
 import 'package:kuguan_flutter/model/net/NetUtils.dart';
 import 'package:kuguan_flutter/model/pages/mainpage/mycar/MyCarContract.dart';
@@ -37,6 +38,9 @@ class MyCarPresenter extends BasePresenter implements I_MycarPresenter {
 
   @override
   void onSucess(code, data) {
-    LogUtils.showLog(MyCarPresenter, data);
+    MyCarInfo myCarInfo = MyCarInfo.fromJson(data);
+    if(null!=myCarInfo){
+     _myCarview.setListData(myCarInfo.rows);
+    }
   }
 }

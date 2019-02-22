@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kuguan_flutter/model/base/BasePage.dart';
-import 'package:kuguan_flutter/model/bean/ParkInfo.dart';
+import 'package:kuguan_flutter/model/bean/MyCarInfo.dart';
 import 'package:kuguan_flutter/model/pages/mainpage/mycar/MyCarContract.dart';
 import 'package:kuguan_flutter/model/pages/mainpage/mycar/MyCarPresenter.dart';
 import 'package:kuguan_flutter/model/utils/LogUtils.dart';
@@ -18,11 +18,12 @@ class MyCarPage extends BasePage {
 class _MyCarState extends BaseState
     with SingleTickerProviderStateMixin
     implements I_MycarView {
-  var listItems = List<ParkInfo>();
+  var listItems = List<CarInfo>();
   MyCarPresenter _presenter;
   TextEditingController vinController = TextEditingController();
   TabController _tabController;
   SearchView searchView;
+  var _hasData = false;
 
   @override
   void initState() {
@@ -53,11 +54,41 @@ class _MyCarState extends BaseState
             child: searchView,
           ),
           _buildTabView(),
+          Expanded(
+            flex: 1,
+            child: Container(
+              color: Colors.white,
+              child: _hasData ? _listBuild() : getEmptyView(),
+            ),
+          )
         ],
       ),
     );
   }
 
+  ///列表数据
+  Widget _listBuild() {
+    return ListView.builder(
+        itemCount: listItems.length,
+        itemBuilder: (context, index) {
+          return _itemBuild(index);
+        });
+  }
+
+  ///item 的样式
+  Widget _itemBuild(int index) {
+    return GestureDetector(
+      onTap: () {
+        _onClick(listItems[index]);
+      },
+      child: Container(
+        height: ScreenUtil().setHeight(145),
+        child: Text('$index'),
+      ),
+    );
+  }
+
+  ///tab栏选择框
   Widget _buildTabView() {
     return Container(
       color: Colors.white,
@@ -93,7 +124,11 @@ class _MyCarState extends BaseState
   }
 
   @override
-  void setListData(datas) {}
+  void setListData(datas) {
+    listItems = datas;
+    _hasData = listItems.length > 0;
+    setState(() {});
+  }
 
   @override
   void dispose() {
@@ -106,4 +141,6 @@ class _MyCarState extends BaseState
   int getType() {
     return _tabController.index;
   }
+
+  void _onClick(CarInfo listItem) {}
 }
